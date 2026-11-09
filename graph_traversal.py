@@ -38,7 +38,23 @@ def bfs(graph, start, target):
     # - Track parent pointers to reconstruct path
     # - Return path from start to target as a list
     
-    pass
+    visited={start}
+    queue=deque([start])
+    parent={start:None}
+    while queue:
+        current=queue.popleft()
+        if current==target:
+            path=[]
+            while current is not None:
+                path.append(current)
+                current=parent[current]
+            return path[::-1]
+        for neighbor in graph[current]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                parent[neighbor]=current
+                queue.append(neighbor)
+    return[]
 
 
 # ============================================================================
@@ -66,7 +82,16 @@ def dfs(graph, start):
     # - Track visited nodes to avoid infinite loops
     # - Return a set of all reachable user IDs
     
-    pass
+    visited=set()
+    stack=[start]
+    while stack:
+        current=stack.pop()
+        if current not in visited:
+            visited.add(current)
+        for neighbor in graph[current]:
+            if neighbor not in visited:
+                stack.append(neighbor)
+    return visited
 
 
 # ============================================================================
